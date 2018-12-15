@@ -10,50 +10,46 @@
 #                                                                              #
 # **************************************************************************** #
 
-class Coffee:
-	def __init__(self, name, sizes, prices):
+import json
+
+class Good:
+	def __init__(self, name, sizes, prices, type_id):
 		self.name = name
 		self.size = sizes;
 		self.price = prices;
+		self.type_id = type_id
 
 class Shop:
 	def __init__(self):
 		self.phrases =	{
 							'start' 	:	'Привет, ты у Бобра!\nНажми на /menu чтобы заказать кофе или панини!',
-							'menu'		:	'Выбери кофе, а потом его размер!',
-							'time'		:	'Когда заберешь кофе?\nУкажи час:мин',
+							'main_menu'	:	'Кофе или панини?',
+							'menu_cof'	:	'Выбери кофе, а потом его размер!',
+							'menu_pan'	:	'Выбери панини!',
+							'time'		:	'\n\nКогда заберешь заказ?\nОтправь *час*:*мин*\n(_Пример: 16:05_)',
 							'time_fail'	:	'Ты указал время неправильно, укажи час:мин',
-							'order_ok'	:	'Отлично! Заказ принял!',
+							'order_ok'	:	'Заказ принял!',
 							'order_ko'	:	'Произошла ошибка',
-							'cancel'	:	'Отменяем!\nЖелаешь чего - то?\nНажми на /menu !'
+							'cancel'	:	'Отменяем!\nЖелаешь чего - то?\nНажми на /menu !',
+							'empty'		:	'Ты ничего не заказал 🙃\n/menu чтобы заказать'
 						}
-		self.objects = list()
-		self.menu = list()
+		self.categories = list()
+		self.objects = dict()
+		self.menu = dict()
 
-	def addObject(self, name, sizes, prices):
-		self.objects.append(Coffee(name, sizes, prices))
-		self.menu.append(name)
+	def addObject(self, name, sizes, prices, type_id):
+		self.objects[type_id].append(Good(name, sizes, prices, type_id))
+		self.menu[type_id].append(name)
 
-	def refreshMenu(self):
-		self.menu.clear();
-		for coffee in self.objects:
-			self.menu.append(coffee.name)
+	def addCategory(self, type_id, name):
+		self.categories.append({
+			type_id	:	name
+			})
+		self.menu[type_id] = list()
+		self.objects[type_id] = list()
 
-	def getMenu(self):
-		return (self.menu)
-
-class User:
-	def __init__(self, user_id, first, last, username):
-		self.first_name = first
-		self.last_name = last
-		self.user_id = user_id
-		self.username = username
-
-	def getInfo(self):
-		d = {
-			'first_name'	: self.first_name,
-			'last_name'		: self.last_name,
-			'user_id'		: self.user_id,
-			'username'		: self.username
-		}
-		return (d);
+class Order:
+	def __init__(self, name_id, size_id, type_id):
+		self.id = name_id
+		self.s_id = size_id
+		self.type_id = type_id
