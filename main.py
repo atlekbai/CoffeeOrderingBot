@@ -32,8 +32,8 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://ubobrakyiv.firebaseio.com' })
 orders = db.reference('orders')
 
-TOKEN = '626240872:AAGd7TpPfxthvc58yxQczqNlM5C2TRX77Mw'
-adminToken = "784780047:AAHM5_Bi5bJy5i4Rje8_giIxpzYkadO7CSc"
+TOKEN = 'BOT TOKEN'
+adminToken = "ADMIN TOKEN"
 MENU_SWITCH, PANINI_MENU, COFFEE_MENU, COFFEE_SIZE, TIME = range(5)
 admin = Bot(adminToken)
 
